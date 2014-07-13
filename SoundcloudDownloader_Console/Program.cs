@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SoundcloudDownloader_Console
 {
@@ -125,9 +126,9 @@ namespace SoundcloudDownloader_Console
             List<TrackID> trackIDs = new List<TrackID>(resolveTrackIDs(url));
             foreach (TrackID trackID in trackIDs)
             {
-                String downloadurl = resolveDownloadURL(trackID.id).Replace("\\u0026", "&");
+                String downloadurl = Regex.Unescape(resolveDownloadURL(trackID.id)); //.Replace("\\u0026", "&");
                 WebClient w = new WebClient();
-                String filename = trackID.title + ".mp3";
+                String filename = Regex.Unescape(trackID.title) + ".mp3";
                 Console.WriteLine("Downloading " + filename + ".");
                 w.DownloadFile(downloadurl, filename);
                 Console.WriteLine("Finished downloading " + filename + ".");
