@@ -112,6 +112,11 @@ namespace SoundcloudDownloader_Console
             String downloadurl = resolveDownloadURL(trackID.id).Replace("\\u0026", "&");
             WebClient w = new WebClient();
             String filename = trackID.title + ".mp3";
+            int currentindex = 0;
+            if (filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                filename = url.Substring(url.LastIndexOf("/") + 1) + ".mp3";
+            }
             Console.WriteLine("Downloading " + filename + ".");
             w.DownloadFile(downloadurl, filename);
             Console.WriteLine("Finished downloading " + filename + ".");
@@ -129,6 +134,11 @@ namespace SoundcloudDownloader_Console
                 String downloadurl = Regex.Unescape(resolveDownloadURL(trackID.id)); //.Replace("\\u0026", "&");
                 WebClient w = new WebClient();
                 String filename = Regex.Unescape(trackID.title) + ".mp3";
+                int currentindex = 0;
+                if (filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                {
+                    filename = url.Substring(url.LastIndexOf("/") + 1) + ".mp3";
+                }
                 Console.WriteLine("Downloading " + filename + ".");
                 w.DownloadFile(downloadurl, filename);
                 Console.WriteLine("Finished downloading " + filename + ".");
